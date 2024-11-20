@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SocialInfoPage(onNext: () -> Unit) {
+fun SocialInfoPage(onNext: () -> Unit, onAddSNS: () -> Unit) {
     val progress = 0.7f
         Column(
             modifier = Modifier
@@ -110,7 +110,7 @@ fun SocialInfoPage(onNext: () -> Unit) {
                                 .size(48.dp) // Size of the circle
                                 .clip(CircleShape) // Make the box a circle
                                 .background(Color(0xFF9CD2A1))
-                                .clickable { onNext() } // 클릭 시 onNext 호출
+                                .clickable { onAddSNS() }
                         ){
                             Text(
                                 text = "+",
