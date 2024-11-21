@@ -15,10 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.format.TextStyle
@@ -63,10 +66,16 @@ fun BasicInformationPage(onNext: () -> Unit) {
 
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = "이름 또는 닉네임 *",
+                text = buildAnnotatedString {
+                    append("이름 또는 닉네임 ")
+                    withStyle(style = SpanStyle(color = Color.Red)) { // * 부분만 빨간색으로 설정
+                        append("*")
+                    }
+                },
                 modifier = Modifier.padding(start = 5.dp, bottom = 4.dp),
                 fontWeight = FontWeight.Bold
             )
+
 
             // 이름 입력 필드
             OutlinedTextField(
@@ -86,14 +95,20 @@ fun BasicInformationPage(onNext: () -> Unit) {
             // "0/20" 문자
             Text(
                 text = "${name.value.length}/20",
-                modifier = Modifier.padding(start = 320.dp, top = 0.dp),
+                modifier = Modifier.padding(start = 360.dp, top = 0.dp),
                 style = androidx.compose.ui.text.TextStyle(fontSize = 13.sp, color = Color.Gray)
             )
             Text(
-                text = "*은 필수 사항입니다.",
-                modifier = Modifier.padding(start = 240.dp, top = 0.dp),
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(color = Color.Red)) { // * 부분만 빨간색으로 설정
+                        append("*")
+                    }
+                    append("은 필수 사항입니다.") // 나머지 텍스트
+                },
+                modifier = Modifier.padding(start = 280.dp, top = 0.dp),
                 style = androidx.compose.ui.text.TextStyle(fontSize = 13.sp, color = Color.Gray)
             )
+
         }
 
         Spacer(modifier = Modifier.height(8.dp))
