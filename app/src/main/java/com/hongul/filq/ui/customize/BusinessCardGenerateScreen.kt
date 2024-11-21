@@ -1,5 +1,6 @@
 package com.hongul.filq.ui.customize
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +43,7 @@ import com.hongul.filq.ui.customize.page.SelectPhotoPage
 import com.hongul.filq.ui.customize.page.SocialInfoPage
 import com.hongul.filq.ui.customize.page.StartPage
 import com.hongul.filq.ui.customize.page.URLPage
+import com.hongul.filq.ui.customize.page.saveImageToGallery
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,6 +56,15 @@ fun BusinessCardGenerateScreen(navigator: NavHostController) {
     var title by remember { mutableStateOf("") }
     var selectedTemplateImageRes by remember { mutableStateOf<Int?>(null) }
     var currentSNS by remember { mutableStateOf<String?>(null) } // 현재 선택된 SNS 이름
+
+    // 상위에서 공유되는 상태
+    var selectedImage by remember { mutableStateOf<Bitmap?>(null) }
+    var selectedColor by remember { mutableStateOf<Color?>(null) }
+    var selectedAlignment by remember { mutableStateOf<Alignment>(Alignment.BottomStart) }
+
+    val context = LocalContext.current
+    // 페이지 간 이동에 사용될 상태
+    var currentPage by remember { mutableStateOf(0) }
 
     // ps.currentPage 값에 따라 title을 업데이트
     LaunchedEffect(ps.currentPage, currentSNS) {
@@ -240,23 +252,32 @@ fun BusinessCardGenerateScreen(navigator: NavHostController) {
                     )
 
                     7 -> SelectPhotoPage(
-                        onNext = { scope.launch { ps.animateScrollToPage(8) } }
+                        onNext = { scope.launch { ps.animateScrollToPage(8) } },
+                        onImageSelected = { image ->
+                            selectedImage = image // 선택된 이미지를 상위 상태에 저장
+                            Log.d("SelectPhotoPage", "이미지가 선택되었습니다.")
+                        }
                     )
 
                     8 -> LetterPositionPage(
                         onNext = { scope.launch { ps.animateScrollToPage(9) } },
-                        onBack = { scope.launch { ps.animateScrollToPage(7) } }
+                        onBack = { scope.launch { ps.animateScrollToPage(7) } },
+                                onAlignmentSelected = { alignment -> selectedAlignment = alignment }
                     )
 
                     9 -> ChangeTextColorPage(
                         onNextClick = { scope.launch { ps.animateScrollToPage(10) } },
-                        onColorSelected = { selectedColor ->
-                            Log.d("ChangeTextColorPage", "Selected color: $selectedColor")
-                        }
+                        onColorSelected = { color -> selectedColor = color }
                     )
 
                     10 -> RegisterBusinessCardPage(
-                        onCompleteClick = { scope.launch { ps.animateScrollToPage(0) } }
+                        onCompleteClick = {
+                            // 최종 등록 처리, 예를 들어 갤러리에 저장 등
+                            selectedImage?.let { saveImageToGallery(context, it) }
+                        },
+                        selectedImage = selectedImage,
+                        selectedColor = selectedColor ?: Color.Black,
+                        selectedAlignment = selectedAlignment
                     )
 
                     11 -> {

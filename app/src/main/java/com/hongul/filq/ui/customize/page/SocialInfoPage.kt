@@ -104,7 +104,7 @@ fun SocialInfoPage(onNext: () -> Unit, onAddSNS: () -> Unit) {
                     horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally) // Centers the content horizontally
                 ) {
                     // Loop to create 5 circular boxes
-                    (1..5).forEach { index ->
+                    (1..4).forEach { index ->
                         Box(
                             modifier = Modifier
                                 .size(48.dp) // Size of the circle

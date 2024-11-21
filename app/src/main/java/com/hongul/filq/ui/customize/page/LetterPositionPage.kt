@@ -15,7 +15,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun LetterPositionPage(
     onNext: () -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onAlignmentSelected: (Alignment) -> Unit
 ) {
     var textColor by remember { mutableStateOf(Color.Black) } // 글자 색상 관리
     val selectedBoxes = remember { mutableStateOf(listOf(false, false, false)) }
@@ -49,6 +50,15 @@ fun LetterPositionPage(
                     onCheckedChange = { checked ->
                         selectedBoxes.value = selectedBoxes.value.toMutableList().apply {
                             this[index] = checked
+                        }
+                        if (checked) {
+                            onAlignmentSelected(
+                                when (index) { // 선택된 Index에 따라 Alignment 전달
+                                    0 -> Alignment.BottomStart
+                                    1 -> Alignment.Center
+                                    else -> Alignment.BottomEnd
+                                }
+                            )
                         }
                     }
                 )
