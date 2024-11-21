@@ -274,6 +274,10 @@ fun BusinessCardGenerateScreen(navigator: NavHostController) {
                         onCompleteClick = {
                             // 최종 등록 처리, 예를 들어 갤러리에 저장 등
                             selectedImage?.let { saveImageToGallery(context, it) }
+                            scope.launch {
+                                Log.d("BusinessCardPreviewScreen", "완료 버튼 클릭됨")
+                                ps.scrollToPage(0) // 완료 버튼 클릭 시 첫 페이지로 이동
+                            }
                         },
                         selectedImage = selectedImage,
                         selectedColor = selectedColor ?: Color.Black,
@@ -335,7 +339,7 @@ fun BusinessCardGenerateScreen(navigator: NavHostController) {
                                 onCompleteClick = {
                                     scope.launch {
                                         Log.d("BusinessCardPreviewScreen", "완료 버튼 클릭됨")
-                                        ps.animateScrollToPage(0) // 완료 버튼 클릭 시 첫 페이지로 이동
+                                        ps.scrollToPage(0) // 완료 버튼 클릭 시 첫 페이지로 이동
                                     }
                                 },
                                 onBackClick = {

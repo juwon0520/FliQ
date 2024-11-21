@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hongul.filq.R
@@ -78,6 +79,7 @@ fun RegisterBusinessCardPage(
                 ){
                     Text(
                         text = "홍얼홍얼",
+                        fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         color = selectedColor,
                     )
