@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -187,6 +188,23 @@ fun BusinessCardGenerateScreen(navigator: NavHostController) {
                         )
                     }
                 },
+                actions = {
+                    // 4번 페이지에만 "건너뛰기" 버튼 표시
+                    if (ps.currentPage == 4) {
+                        TextButton(onClick = {
+                            scope.launch { ps.scrollToPage(6) } // 6번 페이지로 이동
+                        },
+                            modifier = Modifier.padding(end = 16.dp)
+                        ) {
+                            Text(
+                                text = "건너뛰기",
+                                color = Color(0xFF125422),
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                }
             )
         }
     ) { innerPadding ->
