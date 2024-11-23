@@ -7,6 +7,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -89,7 +90,14 @@ fun BusinessCardGenerateScreen(navigator: NavHostController) {
 
     Scaffold(modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = title,
+                        fontWeight = FontWeight.Bold, // 원하는 스타일로 설정
+                        fontSize = 18.sp
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = {
                         when {
@@ -156,35 +164,6 @@ fun BusinessCardGenerateScreen(navigator: NavHostController) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                             contentDescription = "뒤로 가기"
-                        )
-                    }
-                },
-                title = {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center // 중앙 정렬
-                    ) {
-                        Text(
-                            text = title,
-                            fontWeight = FontWeight.SemiBold, // 굵게 설정
-                            fontSize = 18.sp, // 원하는 크기로 설정
-                            modifier = if (title == "글자 색 바꾸기") {
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(start = 100.dp)
-                            } else if (title == "명함 사진 불러오기란?") {
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(start = 80.dp)
-                            } else if (title == "글자 위치 바꾸기") {
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(start = 100.dp)
-                            } else {
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(start = 121.dp)
-                            }
                         )
                     }
                 },
