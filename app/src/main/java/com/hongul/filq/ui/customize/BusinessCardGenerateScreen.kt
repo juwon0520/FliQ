@@ -94,7 +94,7 @@ fun BusinessCardGenerateScreen(navigator: NavHostController) {
                 title = {
                     Text(
                         text = title,
-                        fontWeight = FontWeight.Bold, // 원하는 스타일로 설정
+                        fontWeight = FontWeight.Bold,
                         fontSize = 18.sp
                     )
                 },
